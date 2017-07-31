@@ -105,11 +105,13 @@
         {% set text = config.extra.get("font", {}).text | default("Roboto") %}
         {% set code = config.extra.get("font", {}).code
                     | default("Roboto Mono") %}
+        {% set text_color = config.extra.get("font", {}).text_color | default("#000") %}
         {% set font = text + ":300,400,400i,700|" + code | replace(" ", "+") %}
         <link rel="stylesheet" type="text/css"
             href="https://fonts.googleapis.com/css?family={{ font }}" />
         <style>
           body, input {
+            color: <!-- htmlmin:ignore -->{{ text_color }}<!-- htmlmin:ignore -->;
             font-family: "{{ text }}", "Helvetica Neue",
               Helvetica, Arial, sans-serif;
           }
