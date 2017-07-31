@@ -96,6 +96,7 @@
 {% else %}
   <li class="{{ class }}">
     <a href="{{ nav_item.url }}" title="{{ nav_item.title }}"
+       {% if nav_item.target %}target="{{ nav_item.target }}"{% endif %}
         class="md-nav__link">
       {{ nav_item.title }}
     </a>
