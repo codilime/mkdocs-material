@@ -65,18 +65,6 @@
 .md-header-nav {
   padding: 0.4rem;
 
-  &__company-logo {
-    display: block;
-    position: relative;
-  }
-
-  &__company-link {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-  }
-
   // Icon buttons
   &__button {
     @extend %md-icon__button;

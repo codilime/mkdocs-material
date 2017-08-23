@@ -64,21 +64,6 @@
             {{ page.title | default(config.site_name, true) }}
           {% endblock %}
         </span>
-        {% if config.extra.company_logo %}
-        <span class="md-header-nav__title">
-          {% if config.extra.company_url %}
-          <a class="md-header-nav__button md-header-nav__company-link" href="{{ config.extra.company_url }}">
-          {% else %}
-          <span class="md-header-nav__company-link">
-          {% endif %}
-            <img class="md-header-nav__company-logo" src="{{ base_url }}/{{ config.extra.company_logo }}" />
-          {% if config.extra.company_url %}
-          </a>
-          {% else %}
-          </span>
-          {% endif %}
-        </span>
-        {% endif %}
       </div>
 
       <!-- Button to open search dialogue -->
