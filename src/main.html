@@ -2,24 +2,6 @@
 
 {% extends "base.html" %}
 
-{% block scripts %}
-{# this block is inserted at the bottom of the page, before closing body tag #}
-{{ super() }}
-
-<script>
-/* eslint-disable */
-  window.__lc = window.__lc || {};
-  window.__lc.license = 8942879;
-  (function() {
-    var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-    lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-  })();
-  /* eslint-enable */
-</script>
-
-{% endblock %}
-
 {% block extrahead %}
 {# no super() here, since this block is empty anyway, and is inserted inside as the last item inside the head tag #}
 
