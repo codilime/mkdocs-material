@@ -8,6 +8,12 @@
 <script>
   const isProduction = {{ config.extra.is_production|default("false") }};
 
+  if (window.location.hostname === 'localhost') {
+    // eslint-disable-next-line no-console
+    console.warn('[NEPTUNE-DOCS] It looks like you are in local development mode so that analytics script will not be attached');
+    return;
+  }
+
   //init all analytics scripts
   initGA(isProduction);
   initHeap(isProduction);
@@ -68,22 +74,51 @@
       }
     };
     const appId = getAppId(isProduction);
+    appendHotJarScript(appId);
+    tagRecording();
 
-    (function (h, o, t, j, a, r) {
-      h.hj = h.hj || function () {
-        (h.hj.q = h.hj.q || []).push(arguments);
-      };
-      h._hjSettings = {hjid: appId, hjsv: 5};
-      a = o.getElementsByTagName('head')[0];
-      r = o.createElement('script');
-      r.async = 1;
-      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-      a.appendChild(r);
-    })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    function appendHotJarScript(appId) {
+      (function (h, o, t, j, a, r) {
+        h.hj = h.hj || function () {
+          (h.hj.q = h.hj.q || []).push(arguments);
+        };
+        h._hjSettings = {hjid: appId, hjsv: 5};
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script');
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    }
 
     function getAppId(isProduction) {
       return isProduction ? options.prod.appId : options.devel.appId;
     }
+
+    function tagRecording() {
+      const TAG_RECORDING_DELAY = 5 * 1000;
+
+      if ( canSafelyTagRecording() ) {
+        hj('tagRecording', [ heap.identity ]);
+      } else {
+
+        //try until all needed libs and data is available
+        window.setTimeout(tagRecording, TAG_RECORDING_DELAY);
+      }
+    }
+
+    function canSafelyTagRecording() {
+      return (
+        typeof hj === 'function'
+        && typeof heap === 'object'
+        && typeof heap.identity === 'string'
+        && heap.identity.length > 0
+      );
+    }
+
+    function getAppId(isProduction) {
+        return isProduction ? options.prod.appId : options.devel.appId;
+      }
   }
 </script>
 
