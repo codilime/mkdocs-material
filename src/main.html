@@ -5,6 +5,8 @@
 {% block extrahead %}
 {# no super() here, since this block is empty anyway, and is inserted inside as the last item inside the head tag #}
 
+
+<script id="neptune-analytics" src="/api/analytics/v1/npt-analytics.js"></script>
 <script>
   (function () {
     const isProduction = {{ config.extra.is_production|default("false") }};
@@ -16,9 +18,32 @@
     }
 
     //init all analytics scripts
+    initNeptuneAnalytics();
     initGA(isProduction);
     initHeap(isProduction);
     initHotJar(isProduction);
+
+    function initNeptuneAnalytics() {
+      if (window.neptuneAnalytics) {
+        window.neptuneAnalytics.init({
+          component: 'DOCS',
+          isMaintenancePage: false
+        });
+
+        window.neptuneAnalytics.autotrackScrollsOnDocs({
+          node: window,
+          isGetStartedPanel: false,
+        });
+        window.neptuneAnalytics.autotrackTextSelectionOnDocs({
+          node: document,
+          isGetStartedPanel: false,
+        });
+        window.neptuneAnalytics.autotrackClicksOnDocs({
+          node: document,
+          isGetStartedPanel: false,
+        });
+      }
+    }
 
     function initGA(isProduction) {
       /* eslint-disable */
