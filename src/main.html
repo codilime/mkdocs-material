@@ -6,7 +6,7 @@
 {# no super() here, since this block is empty anyway, and is inserted inside as the last item inside the head tag #}
 
 
-<script id="neptune-analytics" src="/api/analytics/v1/npt-analytics.js"></script>
+<script id="npt-athena" src="/api/athena/v1/npt-athena.js"></script>
 <script>
   (function () {
     const isProduction = {{ config.extra.is_production|default("false") }};
